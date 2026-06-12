@@ -1,4 +1,9 @@
-pub fn add(left: u64, right: u64) -> u64 {
+use wasm_bindgen::prelude::*;
+
+// #[wasm_bindgen] マクロを付けることで、この関数がWasmのインターフェースとして
+// 自動的にラップされ、TS側から呼べるようになる
+#[wasm_bindgen]
+pub fn add(left: u32, right: u32) -> u32 {
     left + right
 }
 

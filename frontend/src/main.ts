@@ -58,3 +58,19 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 `
 
 setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+// wasm-packが生成したpkgディレクトリから、初期化関数(init)とadd関数をインポート
+import init, { add } from './pkg';
+
+// Wasmのロードと初期化は非同期で行われるため、トップレベルで実行します
+async function runWasm() {
+  // Wasmモジュールを初期化（必須）
+  await init();
+
+  // Rustのadd関数を実行
+  const result = add(10, 32);
+  
+  // ブラウザのコンソールに出力
+  console.log(`Rust側の計算結果: 10 + 32 = ${result}`);
+}
+
+runWasm();
