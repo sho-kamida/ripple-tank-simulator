@@ -1,5 +1,6 @@
-use wasm_bindgen::prelude::*;
+mod wave_engine;
 
+use wasm_bindgen::prelude::*;
 // #[wasm_bindgen] マクロを付けることで、この関数がWasmのインターフェースとして
 // 自動的にラップされ、TS側から呼べるようになる
 #[wasm_bindgen]
