@@ -38,6 +38,10 @@ impl Wave1D {
         self.previous = self.current.clone();
         self.current = next;
     }
+
+    pub fn get_current_state(&self) -> Vec<f32> {
+        self.current.clone()
+    }
 }
 
 #[cfg(test)]
