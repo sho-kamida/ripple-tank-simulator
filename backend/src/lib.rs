@@ -1,20 +1,31 @@
-mod wave_engine;
-
+mod  wave_engine;
 use wasm_bindgen::prelude::*;
-// #[wasm_bindgen] マクロを付けることで、この関数がWasmのインターフェースとして
-// 自動的にラップされ、TS側から呼べるようになる
+use wave_engine::Wave1D;
+
 #[wasm_bindgen]
-pub fn add(left: u32, right: u32) -> u32 {
-    left + right
+pub struct WasmWave1D {
+    engine: Wave1D,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+#[wasm_bindgen]
+impl WasmWave1D {
+    #[wasm_bindgen(constructor)]
+    pub fn new(size: usize) -> Self {
+        WasmWave1D { engine: Wave1D::new(size) }
+    }
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    // 波を動かす
+    pub fn tick(&mut self) {
+        self.engine.tick();
+    }
+
+    // 波源を作る
+    pub fn pluck(&mut self, index: usize, force: f32) {
+        self.engine.pluck(index, force);
+    }
+
+    // JS側にデータを渡す（スナップショット）
+    pub fn get_data(&self) -> Vec<f32> {
+        self.engine.get_current_state()
     }
 }
