@@ -1,27 +1,27 @@
 mod  wave_engine;
 use wasm_bindgen::prelude::*;
-use wave_engine::Wave1D;
+use wave_engine::Wave2D;
 
 #[wasm_bindgen]
-pub struct WasmWave1D {
-    engine: Wave1D,
+pub struct WasmWave2D {
+    engine: Wave2D,
 }
 
 #[wasm_bindgen]
-impl WasmWave1D {
+impl WasmWave2D {
     #[wasm_bindgen(constructor)]
-    pub fn new(size: usize) -> Self {
-        WasmWave1D { engine: Wave1D::new(size) }
+    pub fn new(width: usize, height: usize) -> Self {
+        WasmWave2D {
+            engine: Wave2D::new(width, height),
+        }
     }
 
     // 波を動かす
-    pub fn tick(&mut self) {
-        self.engine.tick();
-    }
+    pub fn tick(&mut self) { self.engine.tick(); }
 
     // 波源を作る
-    pub fn pluck(&mut self, index: usize, force: f32) {
-        self.engine.pluck(index, force);
+    pub fn pluck(&mut self, x: usize, y: usize, force: f32) {
+        self.engine.pluck(x, y, force);
     }
 
     // JS側にデータを渡す（スナップショット）
