@@ -1,8 +1,10 @@
-import init, { WasmWave1D } from './pkg'
+import init, { WasmWave2D } from './pkg'
 
 async function run() {
   await init();
-  const wave = new WasmWave1D(100); // 100要素の波を作成
+  const width = 20;
+  const height = 20;
+  const wave = new WasmWave2D(width, height); // 20x20のグリッド
   let isRunning = true;
 
   // 数値表示用の要素を取得
@@ -10,15 +12,29 @@ async function run() {
 
   function loop() {
     if (isRunning) {
-      wave.pluck(5, -1.0);
+      wave.pluck(10, 10, -1.0);
       isRunning = false
     }
     wave.tick();
 
     const data = wave.get_data();
 
-    // 配列の表示
-    debugEl.textContent = Array.from(data).map(n => n.toFixed(2).padStart(7)).join(" ")
+    // 2D波動の出力形式をwave_engine.rsのtestと同じにする
+    let display = "";
+    for (let y = 0; y < height; y++) {
+      let row = "";
+      for (let x = 0; x < width; x++) {
+        const val = data[y * width + x];
+        if (Math.abs(val) > 0.001) {
+          row += val.toFixed(2).padStart(7) + " ";
+        } else {
+          row += "  .    ";
+        }
+      }
+      display += row + "\n";
+    }
+
+    debugEl.textContent = display
 
     setTimeout(loop, 1000)
   }
