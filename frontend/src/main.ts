@@ -2,9 +2,11 @@ import init, { WasmWave2D } from './pkg'
 
 async function run() {
   await init();
-  const width = 20;
-  const height = 20;
-  const wave = new WasmWave2D(width, height); // 20x20のグリッド
+
+  // マップとして見やすくなるよう、解像度を少し上げる
+  const width = 100;
+  const height = 100;
+  const wave = new WasmWave2D(width, height);
   let isRunning = true;
 
   // HTMLからCanvas要素を取得してサイズを設定
@@ -18,9 +20,12 @@ async function run() {
 
   function loop() {
     if (isRunning) {
-      wave.pluck(10, 10, -1.0);
+      // マップの中央をタップする
+      wave.pluck(Math.floor(width / 2), Math.floor(height / 2), -5.00);
       isRunning = false
     }
+
+    // 物理演算を1ステップ進める
     wave.tick();
 
     const data = wave.get_data();

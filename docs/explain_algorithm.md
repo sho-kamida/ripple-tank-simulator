@@ -1,0 +1,1 @@
+$\frac{\partial^2 u}{\partial t^2} = v^2 \Delta u$
