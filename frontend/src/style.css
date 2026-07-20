@@ -2,4 +2,18 @@ body {
   margin: 0;
   padding: 20px;
   font-family: sans-serif;
+  background-color: #f5f5f5;
+}
+
+#canvas {
+  /* 波のない状態（0.0）がグレーになるため、背景もグレーにしておきます */
+  background: #808080;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  /* 100x100のサイズを画面上で400x400に拡大表示する */
+  width: 400px;
+  height: 400px;
+
+  /* 拡大した時にアンチエイリアスでぼやけないようにする（ドット絵のように表示） */
+  image-rendering: pixelated;
 }
